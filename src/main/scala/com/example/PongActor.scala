@@ -5,10 +5,13 @@ import akka.actor.{Actor, ActorLogging, Props}
 class PongActor extends Actor with ActorLogging {
   import PongActor._
 
+  private var pongCounter = 0
+
   def receive = {
   	case PingActor.PingMessage(text) => 
   	  log.info("In PongActor - received message: {}", text)
-  	  sender() ! PongMessage("pong")
+  	  pongCounter += 1
+      sender() ! PongMessage(s"pong-$pongCounter")
   }	
 }
 
